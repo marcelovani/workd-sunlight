@@ -112,24 +112,27 @@ function completeFn( results ) {
 	printStats( "Parse complete" );
 	console.log( "    Results:", results );
 
-	var xhr;
-	TWEEN.start();
+	// Normalize data.
+	var dayData = [];
+	var darkData = [];
+	for(i = 0; i < results.data.length; i++){
+		var item = results.data[i];
+		dayData.push(item.lat, item.lng, Math.random() * 1);
+		darkData.push(item.lat, item.lng, Math.random() *.5);
+	}
 
-	xhr = new XMLHttpRequest();
-	xhr.open('GET', '/globe/population909500.json', true);
-	xhr.onreadystatechange = function(e) {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				var data = JSON.parse(xhr.responseText);
-				window.data = data;
+	TWEEN.start();
+	//console.log(dayData);
+
+
 				data = [
 					[
 					'1990',
-					[6,159,.3]
+						dayData
 					],
 					[
 					'1995',
-						[30,99,.2]
+						darkData
 					]
 				];
 					console.log(data);
@@ -145,10 +148,7 @@ function completeFn( results ) {
 				settime(globe,0)();
 				globe.animate();
 				document.body.style.backgroundImage = 'none'; // remove loading
-			}
-		}
-	};
-	xhr.send(null);
+
 
 }
 

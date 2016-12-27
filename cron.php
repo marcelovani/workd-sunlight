@@ -26,7 +26,19 @@ for ($d = 0; $d < $days; $d++) {
   $sunrise = date_sunrise($time, SUNFUNCS_RET_TIMESTAMP, $latitude, $longitude, $zenith, $gmtOffset);
   $sunset = date_sunset($time, SUNFUNCS_RET_TIMESTAMP, $latitude, $longitude, $zenith, $gmtOffset);
 
-  $light = $sunset - $sunrise;
+  // Calculate difference of hours
+  $date1 = date_create();
+  date_timestamp_set($date1, $sunrise);
+
+  $date2 = date_create();
+  date_timestamp_set($date2, $sunset);
+
+  $diff = $date2->diff($date1);
+
+  $hours = $diff->h;
+  $hours = $hours + ($diff->days * 24);
+
+  $light = $hours * 60 * 60; // Calculate in seconds
   $darkness = $secondsDay - $light;
 
   $hoursLight = $hoursLight + $light;
@@ -35,8 +47,8 @@ for ($d = 0; $d < $days; $d++) {
   echo 'sunrise ' .
     date('Y-M-d H:m:i', $sunrise) .
     ' sunset ' . date('H:m:i', $sunset) .
-    ' light ' . date('m:i', $light) .
-    ' darkness ' . date('m:i', $darkness) .
+    ' light ' . $hours .
+    ' darkness ' . (24 - $hours) .
     '<br/>';
 
   $time = $time + $secondsDay;

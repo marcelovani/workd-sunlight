@@ -110,45 +110,41 @@ function completeFn( results ) {
 	}
 
 	printStats( "Parse complete" );
-	console.log( "    Results:", results );
+	//console.log( "    Results:", results );
 
 	// Normalize data.
 	var dayData = [];
 	var darkData = [];
-	for(i = 0; i < results.data.length; i++){
+	for ( i = 0; i < results.data.length; i++ ) {
 		var item = results.data[i];
-		dayData.push(item.lat, item.lng, Math.random() * 1);
-		darkData.push(item.lat, item.lng, Math.random() *.5);
+		dayData.push( item.lat, item.lng, Math.random() * 1 );
+		darkData.push( item.lat, item.lng, Math.random() * .5 );
 	}
 
 	TWEEN.start();
-	//console.log(dayData);
 
 
-				data = [
-					[
-					'1990',
-						dayData
-					],
-					[
-					'1995',
-						darkData
-					]
-				];
-					console.log(data);
-					console.log(data[i]);
-				for (i=0;i<data.length;i++) {
-					globe.addData(data[i][1], {
-						format: 'magnitude',
-						name: data[i][0],
-						animated: true}
-					);
-				}
-				globe.createPoints();
-				settime(globe,0)();
-				globe.animate();
-				document.body.style.backgroundImage = 'none'; // remove loading
-
+	data = [
+		[
+			'Light',
+			dayData
+		],
+		[
+			'Darkness',
+			darkData
+		]
+	];
+	for ( i = 0; i < data.length; i++ ) {
+		globe.addData( data[i][1], {
+				format: 'magnitude',
+				name: data[i][0],
+				animated: true}
+		);
+	}
+	globe.createPoints();
+	settime( globe, 0 )();
+	globe.animate();
+	document.body.style.backgroundImage = 'none'; // remove loading
 
 }
 

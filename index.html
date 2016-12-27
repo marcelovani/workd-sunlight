@@ -26,8 +26,8 @@
 	<div id="container"></div>
 
 	<div id="currentInfo">
-		<span id="year1990" class="year">1990</span>
-		<span id="year1995" class="year">1995</span>
+		<span id="filterLight" class="filter">Light</span>
+		<span id="filterDarkness" class="filter">Darkness</span>
 	</div>
 
 	<script type="text/javascript">
@@ -36,7 +36,7 @@
 			Detector.addGetWebGLMessage();
 		} else {
 
-			var years = ['1990','1995'];
+			var filters = ['Light','Darkness'];
 			var container = document.getElementById('container');
 			var globe = new DAT.Globe(container);
 
@@ -45,21 +45,21 @@
 
 			var settime = function(globe, t) {
 				return function() {
-					new TWEEN.Tween(globe).to({time: t/years.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-					var y = document.getElementById('year'+years[t]);
-					if (y.getAttribute('class') === 'year active') {
+					new TWEEN.Tween(globe).to({time: t/filters.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+					var y = document.getElementById('filter'+filters[t]);
+					if (y.getAttribute('class') === 'filter active') {
 						return;
 					}
-					var yy = document.getElementsByClassName('year');
+					var yy = document.getElementsByClassName('filter');
 					for(i=0; i<yy.length; i++) {
-						yy[i].setAttribute('class','year');
+						yy[i].setAttribute('class','filter');
 					}
-					y.setAttribute('class', 'year active');
+					y.setAttribute('class', 'filter active');
 				};
 			};
 
-			for(var i = 0; i<years.length; i++) {
-				var y = document.getElementById('year'+years[i]);
+			for(var i = 0; i<filters.length; i++) {
+				var y = document.getElementById('filter'+filters[i]);
 				y.addEventListener('mouseover', settime(globe,i), false);
 			}
 		}

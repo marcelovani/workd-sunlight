@@ -115,7 +115,7 @@ function completeFn( results ) {
 	// Normalize data.
 	var dayData = [];
 	var darkData = [];
-	var step = 20;
+	var step = 40;
 	for ( i = 0; i < results.data.length; i++ ) {
 		var item = results.data[i];
 		// filename, lat, lng, daylight, perc_day, darkness, per_dark, longest_day, longest_dark

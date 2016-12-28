@@ -136,12 +136,14 @@ function completeFn( results ) {
 			darkData
 		]
 	];
+
 	//console.log(data);
 	for ( i = 0; i < data.length; i++ ) {
 		globe.addData( data[i][1], {
 				format: 'magnitude',
 				name: data[i][0],
-				animated: true}
+				animated: true,
+			}
 		);
 	}
 	globe.createPoints();

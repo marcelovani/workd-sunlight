@@ -68,7 +68,7 @@ DAT.Globe = function(container, opts) {
     }
   };
 
-  var camera, scene, renderer, w, h;
+  var camera, scene, renderer, effect, w, h;
   var mesh, atmosphere, point;
 
   var overRenderer;
@@ -143,6 +143,10 @@ DAT.Globe = function(container, opts) {
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(w, h);
+
+	  effect = new THREE.StereoEffect( renderer );
+	  effect.setEyeSeparation(3); //@todo add gui
+	  effect.setSize( w, h );
 
     renderer.domElement.style.position = 'absolute';
 
@@ -337,6 +341,8 @@ DAT.Globe = function(container, opts) {
     camera.aspect = container.offsetWidth / container.offsetHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( container.offsetWidth, container.offsetHeight );
+	  effect.setSize( container.offsetWidth, container.offsetHeight );
+
   }
 
   function zoom(delta) {
@@ -363,7 +369,9 @@ DAT.Globe = function(container, opts) {
 
     camera.lookAt(mesh.position);
 
-    renderer.render(scene, camera);
+//    renderer.render(scene, camera);
+	  effect.render( scene, camera );
+
   }
 
   init();

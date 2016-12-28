@@ -2,7 +2,7 @@ var stepped = 0, rowCount = 0, errorCount = 0, firstError =undefined;
 var start, end;
 
 $( function () {
-	input = '/data/world_cities.csv';
+	input = '/data/world_cities_lights.csv';
 
 	start = now();
 	var config = buildConfig( true );
@@ -117,12 +117,12 @@ function completeFn( results ) {
 	var darkData = [];
 	for ( i = 0; i < results.data.length; i++ ) {
 		var item = results.data[i];
-		dayData.push( item.lat, item.lng, Math.random() * 1 );
-		darkData.push( item.lat, item.lng, Math.random() * .5 );
+		// filename, lat, lng, daylight, perc_day, darkness, per_dark, longest_day, longest_dark
+		dayData.push( item.lat, item.lng, item.longest_day / 100 );
+		darkData.push( item.lat, item.lng, item.longest_dark / 100 );
 	}
 
 	TWEEN.start();
-
 
 	data = [
 		[
@@ -134,6 +134,7 @@ function completeFn( results ) {
 			darkData
 		]
 	];
+	//console.log(data);
 	for ( i = 0; i < data.length; i++ ) {
 		globe.addData( data[i][1], {
 				format: 'magnitude',

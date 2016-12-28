@@ -115,11 +115,13 @@ function completeFn( results ) {
 	// Normalize data.
 	var dayData = [];
 	var darkData = [];
+	var step = 20;
 	for ( i = 0; i < results.data.length; i++ ) {
 		var item = results.data[i];
 		// filename, lat, lng, daylight, perc_day, darkness, per_dark, longest_day, longest_dark
-		dayData.push( item.lat, item.lng, item.longest_day / 100 );
-		darkData.push( item.lat, item.lng, item.longest_dark / 100 );
+		dayData.push( item.lat, item.lng, item.longest_day / 50 );
+		darkData.push( item.lat, item.lng, item.longest_dark / 50 );
+		if (step > 0) i = i + step;
 	}
 
 	TWEEN.start();

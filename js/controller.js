@@ -119,7 +119,7 @@ function completeFn( results ) {
 	for ( i = 0; i < results.data.length; i++ ) {
 		var item = results.data[i];
 		// filename, lat, lng, daylight, perc_day, darkness, per_dark, longest_day, longest_dark
-		dayData.push( item.lat, item.lng, item.longest_day / 50 );
+		dayData.push( item.lat, item.lng, (item.longest_day / 60 ) + Math.random() * 2);
 		darkData.push( item.lat, item.lng, item.longest_dark / 50 );
 		if (step > 0) i = i + step;
 	}

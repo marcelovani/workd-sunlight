@@ -70,8 +70,9 @@ DAT.Globe = function(container, opts) {
 
   var camera, scene, renderer, effect, w, h;
   var mesh, atmosphere, point;
+	var spotlight, lightHelper;
 
-  var overRenderer;
+	var overRenderer;
 
   var curZoomSpeed = 0;
   var zoomSpeed = 50;
@@ -136,12 +137,27 @@ DAT.Globe = function(container, opts) {
     mesh.scale.set( 1.1, 1.1, 1.1 );
     scene.add(mesh);
 
-    geometry = new THREE.BoxGeometry(0.75, 0.75, 1);
+    geometry = new THREE.BoxGeometry(1.75, 1.75, 1);
     geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
 
-    point = new THREE.Mesh(geometry);
+	  point = new THREE.Mesh(geometry);
 
-    renderer = new THREE.WebGLRenderer({antialias: true});
+	  spotLight = new THREE.SpotLight( 0xffffff, 1 );
+	  spotLight.position.set( 150, 440, 35 );
+	  spotLight.castShadow = true;
+	  spotLight.angle = Math.PI / 4;
+	  spotLight.penumbra = 0.05;
+	  spotLight.decay = 2;
+	  spotLight.distance = 2000;
+	  spotLight.shadow.mapSize.width = 1024;
+	  spotLight.shadow.mapSize.height = 1024;
+	  spotLight.shadow.camera.near = 1;
+	  spotLight.shadow.camera.far = 2000;
+	  lightHelper = new THREE.SpotLightHelper( spotLight );
+	  scene.add( spotLight );
+	  //scene.add( lightHelper );
+
+	  renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(w, h);
 
 	  effect = new THREE.StereoEffect( renderer );
@@ -224,7 +240,7 @@ DAT.Globe = function(container, opts) {
   function createPoints() {
     if (this._baseGeometry !== undefined) {
       if (this.is_animated === false) {
-        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
+        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshLambertMaterial({
               color: 0xffffff,
               vertexColors: THREE.FaceColors,
               morphTargets: false
@@ -239,8 +255,8 @@ DAT.Globe = function(container, opts) {
             this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
           }
         }
-        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-              color: 0xffffff,
+        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshLambertMaterial({
+              color: 0xffff00,
               vertexColors: THREE.FaceColors,
               morphTargets: true
             }));
@@ -367,7 +383,18 @@ DAT.Globe = function(container, opts) {
     camera.position.y = distance * Math.sin(rotation.y);
     camera.position.z = distance * Math.cos(rotation.x) * Math.cos(rotation.y);
 
+	  //spotlight.lookat(camera);//aaa
+	  spotLight.target.position.set( -10, -100, -1 );
+	  spotLight.position.copy( camera.position );
     camera.lookAt(mesh.position);
+
+//	  if (typeof(accelerometerControls) != 'undefined' && accelerometerControls instanceof THREE.DeviceOrientationControls) {
+//		  accelerometerControls.update();
+//	  } else {
+//		  accelerometerControls = new THREE.DeviceOrientationControls( camera );
+//		  //accelerometerControls.connect();
+//		  //camera.position.z = 1;
+//	  }
 
 //    renderer.render(scene, camera);
 	  effect.render( scene, camera );

@@ -139,8 +139,8 @@ DAT.Globe = function(container, opts) {
 
     geometry = new THREE.BoxGeometry(1.75, 1.75, 1);
     geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
-
-	  point = new THREE.Mesh(geometry);
+	  material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+	  point = new THREE.Mesh(geometry, material);
 
 	  spotLight = new THREE.SpotLight( 0xffffff, 1 );
 	  spotLight.position.set( 150, 440, 35 );
@@ -156,6 +156,9 @@ DAT.Globe = function(container, opts) {
 	  lightHelper = new THREE.SpotLightHelper( spotLight );
 	  scene.add( spotLight );
 	  //scene.add( lightHelper );
+
+	  var ambLight = new THREE.AmbientLight(0x404040);
+	  scene.add(ambLight);
 
 	  renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(w, h);

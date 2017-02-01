@@ -8,7 +8,7 @@
 `php -S 127.0.0.1:8000`
 
 ## Cron
-
+`php cron.php`
 
 ## Live demo
 https://marcelovani.github.io/world-sunlight

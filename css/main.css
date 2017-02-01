@@ -92,3 +92,19 @@ a:hover {
   background: url(/globe/ce.png);
 }
 
+.effect-btn {
+  position: relative;
+  top: 0;
+  left: 0;
+  border: 1px solid white;
+  padding: 2px 5px;
+  margin: 4px;
+  background-color: lightgray;
+  color: black;
+  cursor: pointer;
+  float: left;
+}
+
+.effect-btn.active {
+  background-color: lightgreen;
+}

@@ -14,6 +14,7 @@
 		<script type="text/javascript" src="/node_modules/three/build/three.min.js"></script>
 		<script type="text/javascript" src="/node_modules/three/examples/js/controls/DeviceOrientationControls.js"></script>
 		<script type="text/javascript" src="/js/StereoEffect.js"></script>
+		<script type="text/javascript" src="/js/FlickerEffect.js"></script>
 		<!--<script type="text/javascript" src="/node_modules/jquery/src/effects/Tween.js"></script>-->
 		<script type="text/javascript" src="/js/Tween.js"></script>
 		<script type="text/javascript" src="/js/globe.js"></script>
@@ -31,8 +32,25 @@
 		<span id="filterLight" class="filter">Light</span>
 		<span id="filterDarkness" class="filter">Darkness</span>
 	</div>
+	<a class="stereo effect-btn" href="/?effect=stereo">Stereo effect</a>
+	<a class="flicker effect-btn" href="/?effect=flicker">Flicker effect</a>
 
 	<script type="text/javascript">
+
+		var urlParams;
+		(window.onpopstate = function () {
+			var match,
+				pl     = /\+/g,  // Regex for replacing addition symbol with a space
+				search = /([^&=]+)=?([^&]*)/g,
+				decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+				query  = window.location.search.substring(1);
+
+			urlParams = {};
+			while (match = search.exec(query))
+				urlParams[decode(match[1])] = decode(match[2]);
+		})();
+
+		var cameraEffect = 'stereo';
 
 		if(!Detector.webgl){
 			Detector.addGetWebGLMessage();

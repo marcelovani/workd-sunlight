@@ -163,7 +163,12 @@ DAT.Globe = function(container, opts) {
 	  renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(w, h);
 
-	  effect = new THREE.StereoEffect( renderer );
+	  if (typeof(urlParams.effect) == 'string' && urlParams.effect== 'flicker') {
+	    effect = new FlickerEffect( renderer );
+	  }
+	  else {
+	    effect = new THREE.StereoEffect( renderer );
+	  }
 	  effect.setEyeSeparation(3); //@todo add gui
 	  effect.setSize( w, h );
 

@@ -2,7 +2,7 @@ var stepped = 0, rowCount = 0, errorCount = 0, firstError =undefined;
 var start, end;
 
 $( function () {
-	input = './data/world_cities_lights.csv';
+	input = '../data/world_cities_lights.csv';
 
 	start = now();
 	var config = buildConfig( true );

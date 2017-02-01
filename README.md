@@ -15,6 +15,7 @@ https://marcelovani.github.io/world-sunlight
 
 ## Related material
 - Chrome experiments. https://www.chromeexperiments.com/globe
+  https://github.com/dataarts/webgl-globe
 - Suncalc: A tiny JavaScript library for calculating sun/moon positions and phases.
   https://github.com/mourner/suncalc
 - Sunlight map: http://www.edesign.nl/examples/sunlightmap/
